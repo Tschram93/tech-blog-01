@@ -9,10 +9,11 @@
     "handlebars": "^4.7.7",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.14",
-    "sequelize": "^6.9.0"
+    "sequelize": "^6.13.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed": "node seeds/seed.js"
   },
   "name": "tech-blog",
   "version": "1.0.0",
