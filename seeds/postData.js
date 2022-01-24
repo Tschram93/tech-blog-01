@@ -1,3 +1,5 @@
+const { Post } = require('../models');
+
 [
     {
         "title": "A Pirate's life",
