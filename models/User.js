@@ -45,7 +45,7 @@ User.init(
 			},
 			beforeUpdate: async (updatedUserData) => {
 				updatedUserData.password = await bcrypt.hash(
-					updatedUserData.password,
+					updateUserData.password,
 					10
 				);
 				return updatedUserData;
