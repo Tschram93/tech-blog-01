@@ -1,16 +1,25 @@
 const auth = require('../../utils/auth');
 const router = require('express').Router();
-const { Post } = require('../../models');
+const { Comment } = require('../../models');
+
+router.get('/', (req, res) => {
+	Comment.findAll({})
+		.then((dbCommentData) => res.json(dbCommentData))
+		.catch((err) => {
+			console.log(err);
+			res.status(500).json(err);
+		});
+});
 
 router.post('/', auth, async (req, res) => {
 	try {
-		const newPost = await Post.create({
+		const newComment = await Comment.create({
 			...req.body,
 			user_id: req.session.user_id,
-			body: req.body.body,
+			post_id: req.body.post_id,
 		});
 
-		res.status(200).json(newPost);
+		res.status(200).json(newComment);
 	} catch (err) {
 		res.status(400).json(err);
 	}
@@ -18,14 +27,13 @@ router.post('/', auth, async (req, res) => {
 
 router.delete('/:id', auth, async (req, res) => {
 	try {
-		const postData = await Post.destroy({
+		const commentData = await Comment.destroy({
 			where: {
 				id: req.params.id,
-				user_id: req.session.user_id,
 			},
 		});
 
-		if (!postData) {
+		if (!commentData) {
 			res.status(404).json({ message: 'Nothing found with this ID!' });
 			return;
 		}

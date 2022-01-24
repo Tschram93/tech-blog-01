@@ -1,37 +1,36 @@
-const router = require('express').Router();
-const { User, Post } = require('../../models/');
 const auth = require('../../utils/auth');
-
-router.get('/', async (req, res) => {
-	try {
-		const allPosts = await Post.findAll({
-			include: [{ model: User }],
-		});
-		res.status(200).json(allPosts);
-	} catch (err) {
-		console.log(err);
-		res.status(500).json(err);
-	}
-});
+const router = require('express').Router();
+const { Post } = require('../../models');
 
 router.post('/', auth, async (req, res) => {
 	try {
-		const { title, postContent } = req.body;
 		const newPost = await Post.create({
-			title,
-			postContent,
-			userId: req.session.user_id,
+			...req.body,
+			user_id: req.session.user_id,
+			body: req.body.body,
 		});
+
 		res.status(200).json(newPost);
 	} catch (err) {
-		res.status(500).json(err);
+		res.status(400).json(err);
 	}
 });
 
 router.delete('/:id', auth, async (req, res) => {
 	try {
-		Post.destroy({ where: { id: req.params.id } });
-		res.status(200).json({ messsage: 'Post deleted!' });
+		const postData = await Post.destroy({
+			where: {
+				id: req.params.id,
+				user_id: req.session.user_id,
+			},
+		});
+
+		if (!postData) {
+			res.status(404).json({ message: 'Nothing found with this ID!' });
+			return;
+		}
+
+		res.status(200).json(postData);
 	} catch (err) {
 		res.status(500).json(err);
 	}
