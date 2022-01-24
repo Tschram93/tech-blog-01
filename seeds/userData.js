@@ -1,3 +1,4 @@
+const { User } = require('../models');
 [
 	{
 		"username": "Travis",
@@ -15,3 +16,4 @@
 		"password": "password12345"
 	}
 ]
+
