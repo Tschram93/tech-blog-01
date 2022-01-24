@@ -4,7 +4,7 @@ const postData = require('./postData');
 const userData = require('./userData');
 
 const seedAll = async () => {
-	await sequelize.sync({ force: true });
+	try{await sequelize.sync({ force: true });
 
 	console.log('\n----- DATABASE SYNCED -----\n');
 	await userData();
@@ -14,7 +14,10 @@ const seedAll = async () => {
 	await commentData();
 	console.log('\n----- COMMENTS SEEDED -----\n');
 
-	process.exit(0);
+	process.exit(0)} catch(err){
+		console.log(err);
+	}
+		
 };
 
 seedAll();
