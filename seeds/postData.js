@@ -1,6 +1,6 @@
 const { Post } = require('../models');
 
-const postData = [
+const data = [
 	{
 		name: "A Pirate's life",
 		body: "The best Lorem Ipsum Generator in all the sea! Heave this scurvy copyfiller fer yar next adventure and cajol yar clients into walking the plank with ev'ry layout! Configure above, then get yer pirate ipsum...own the high seas, arg!",
@@ -14,5 +14,7 @@ const postData = [
 		body: "Ah, yes! John Quincy Adding Machine. He struck a chord with the voters when he pledged not to go on a killing spree. Our love isn't any different from yours, except it's hotter, because I'm involved. Is today's hectic lifestyle making you tense and impatient? Quite possible. We live long and are celebrated poopers. Check it out, y'all. Everyone who was invited is here. Say it in Russian! Oh sure! Blame the wizards!",
 	},
 ];
+
+const postData = () => Post.bulkCreate(data);
 
 module.exports = postData;
